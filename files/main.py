@@ -28,7 +28,7 @@ def cached_files():
 
 def find_password(list):
     for file in list:
-        with open(file) as f:
+        with open(file, 'r') as f:
             lines = f.readlines()
             for row in lines:
                 if "password" in row:
