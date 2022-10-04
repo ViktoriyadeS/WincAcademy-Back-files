@@ -5,17 +5,24 @@ __human_name__ = "files"
 import os
 import shutil
 
-
-cache_path = os.path.join(os.getcwd(), 'files', 'cache')
 zip_file = os.path.abspath('files/data.zip')
 
 
+def cashe_path():
+    if os.getcwd().endswith('files'):
+        new_path = os.path.join(os.getcwd(), 'cache')
+    else:
+        new_path = os.path.join(os.getcwd(), 'files', 'cache')
+    return new_path
+
+
 def clean_cache():
-    if os.path.exists(cache_path):
-        shutil.rmtree(cache_path)
+    path = cashe_path()
+    if os.path.exists(path):
+        shutil.rmtree(path)
     else:
         pass
-    os.makedirs(cache_path)
+    os.makedirs(path)
 
 
 def cache_zip(filename, extract_dir):
@@ -23,10 +30,11 @@ def cache_zip(filename, extract_dir):
 
 
 def cached_files():
-    dir_cached_files = os.listdir(cache_path)
+    path = cashe_path()
+    dir_cached_files = os.listdir(path)
     list_cached_files = []
     for file in dir_cached_files:
-        list_cached_files.append(os.path.join(cache_path, file))
+        list_cached_files.append(os.path.join(path, file))
     return list_cached_files
 
 
@@ -41,8 +49,9 @@ def find_password(list):
 
 
 def main():
+    path = cashe_path()
     clean_cache()
-    cache_zip(zip_file, cache_path)
+    cache_zip(zip_file, path)
     files = cached_files()
     print(find_password(files))
 
